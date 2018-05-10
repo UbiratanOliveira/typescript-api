@@ -1,0 +1,23 @@
+{
+    "compilerOptions": {
+        "target":"es5",
+        "lib": ["es6"],
+        "module":"commonjs",
+        "outDir":"build",
+        "typeRoots": [
+            "../node_modules/@types"
+        ],
+        "types": [
+            "node"
+        ]
+    },
+    "include": [
+        "server/**/*.ts",
+        "server/*.its"
+    ],
+    "exclude": [
+        "node_modules"
+    ],
+    "compileOnSave": true,
+    "buildOnSave": true
+}
