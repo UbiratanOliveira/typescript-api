@@ -1,16 +1,29 @@
-import * as express from 'express';
-import * as morgan from 'morgan';
-import * as bodyParser from 'body-parser';
+import express  = require('express');
+import morgan  = require('morgan');
+import bodyParser = require('body-parser');
+import Database = require('./config/db');
+import { url } from 'inspector';
 
 class App {
     public app: express.Application;
     private morgan: morgan.Morgan;
     private bodyParser;
+    private database: Database;
 
     constructor() {
         this.app = express();
         this.middleware();
         this.routes();
+        this.database = new Database();
+        this.databaseConnection();
+    }
+
+    databaseConnection() {
+        this.database.createConnection();
+    }
+
+    closeDatabaseConnection(message, callback) {
+        this.database.closeConnection(message, () => callback());
     }
 
     middleware() {

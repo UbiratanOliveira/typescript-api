@@ -3,12 +3,21 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var express = require("express");
 var morgan = require("morgan");
 var bodyParser = require("body-parser");
+var Database = require("./config/db");
 var App = /** @class */ (function () {
     function App() {
         this.app = express();
         this.middleware();
         this.routes();
+        this.database = new Database();
+        this.databaseConnection();
     }
+    App.prototype.databaseConnection = function () {
+        this.database.createConnection();
+    };
+    App.prototype.closeDatabaseConnection = function (message, callback) {
+        this.database.closeConnection(message, function () { return callback(); });
+    };
     App.prototype.middleware = function () {
         this.app.use(morgan('dev'));
         this.app.use(bodyParser.json());
